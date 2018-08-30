@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import css from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -23,25 +23,6 @@ class App extends Component {
             }
         ],
         showPersons: false
-    };
-
-    switchNameHandler = (newName) => {
-        this.setState({
-            persons: [
-                {
-                    name: newName,
-                    age: 28
-                },
-                {
-                    name: 'Manu',
-                    age: 29
-                },
-                {
-                    name: 'Stephanie',
-                    age: 27
-                }
-            ]
-        });
     };
 
     nameChangedHandler = (event, id) => {
@@ -82,15 +63,9 @@ class App extends Component {
     };
 
     render() {
-        const style = {
-            backgroundColor: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer'
-        };
 
         let persons = null;
+        let btnClass = '';
 
         if (this.state.showPersons) {
             persons = (
@@ -108,18 +83,27 @@ class App extends Component {
                     })}
                 </div>
             );
+            btnClass = css.Red;
+        }
+
+        const classes = [];
+        if (this.state.persons.length <= 2) {
+            classes.push(css.red);
+        }
+        if (this.state.persons.length <= 1) {
+            classes.push(css.bold);
         }
 
         return (
-            <div className="App">
-                <h1>Hi, I'm a React App</h1>
-                <p>This is really working!</p>
-                <button
-                    style={style}
-                    onClick={this.togglePersonsHandler}>Show Persons
-                </button>
-                {persons}
-            </div>
+                <div className={css.App}>
+                    <h1>Hi, I'm a React App</h1>
+                    <p className={classes.join(' ')}>This is really working!</p>
+                    <button
+                        className={btnClass}
+                        onClick={this.togglePersonsHandler}>Toggle Persons
+                    </button>
+                    {persons}
+                </div>
         );
     }
 }
